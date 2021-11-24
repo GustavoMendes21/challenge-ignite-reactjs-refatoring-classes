@@ -72,6 +72,7 @@ class Dashboard extends Component {
     const { modalOpen } = this.state;
 
     this.setState({ modalOpen: !modalOpen });
+
   }
 
   toggleEditModal = () => {
