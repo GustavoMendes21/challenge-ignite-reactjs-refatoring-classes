@@ -7,25 +7,27 @@ import Input from "../Input"
 
 
 
-interface Food {
+interface IFood {
+  id: string;
   image: string;
   name: string;
   price: number;
-  description: string
+  description: string;
+  available: boolean;
 }
 
 
 interface ModalEditFoodProps {
   isOpen: boolean;
   setIsOpen: () => void;
-  handleUpdateFood: (food: Food) => void;
-  editingFood: Food
+  handleUpdateFood: (food: IFood) => void;
+  editingFood: IFood
 }
 
 export function ModalEditFood({ handleUpdateFood, isOpen, setIsOpen, editingFood }: ModalEditFoodProps) {
   const formRef = useRef(null)
   
-  async function handleSubmit(data:Food) {
+  async function handleSubmit(data:IFood) {
     handleUpdateFood(data)
     setIsOpen()
   }
@@ -34,12 +36,12 @@ export function ModalEditFood({ handleUpdateFood, isOpen, setIsOpen, editingFood
     <Modal isOpen={isOpen} setIsOpen={setIsOpen}>
       <Form ref={formRef} onSubmit={handleSubmit} initialData={editingFood}>
         <h1>Editar Prato</h1>
-        <Input name="image" placeholder="Cole o link aqui" icon={undefined} />
+        <Input name="image" placeholder="Cole o link aqui" />
 
-        <Input name="name" placeholder="Ex: Moda Italiana" icon={undefined} />
-        <Input name="price" placeholder="Ex: 19.90" icon={undefined} />
+        <Input name="name" placeholder="Ex: Moda Italiana" />
+        <Input name="price" placeholder="Ex: 19.90" />
 
-        <Input name="description" placeholder="Descrição" icon={undefined} />
+        <Input name="description" placeholder="Descrição" />
 
         <button type="submit" data-testid="edit-food-button">
           <div className="text">Editar Prato</div>

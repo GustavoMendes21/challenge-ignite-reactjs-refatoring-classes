@@ -5,7 +5,7 @@ import { FiEdit3, FiTrash } from 'react-icons/fi';
 
 import { Container } from './styles';
 
-interface Food {
+interface IFood {
   id: string;
   image: string;
   name: string;
@@ -16,21 +16,22 @@ interface Food {
 
 interface FoodProps {
   key: string;
-  food: Food;
+  food: IFood;
   handleDelete: (id: string) => void;
-  handleEditFood: (food: Food) => void
+  handleEditFood: (food: IFood) => void
 }
 
 export function Food ({ food, handleDelete, handleEditFood }: FoodProps) {
-  const [ isAvailable, setIsAvailable ] = useState(true)
+  const [ isAvailable, setIsAvailable ] = useState(food.available)
   
   async function toggleAvailable() {
-    setIsAvailable(!isAvailable)
     
-    await api.put(`/foods/${food.id}`, {
-      ...Food,
-      available: isAvailable
+    const response = await api.put(`/foods/${food.id}`, {
+      ...food,
+      available: !isAvailable
     })
+    
+    setIsAvailable(response.data.available)
   }
 
   function setEditingFood () {
